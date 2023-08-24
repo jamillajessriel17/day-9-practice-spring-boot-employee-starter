@@ -28,12 +28,10 @@ public class EmployeeServiceTest {
 
     private CompanyJpaRepository mockedCompanyJpaRepository;
 
-    private EmployeeJpaRepository mockedEmployeeJpaRepository;
-
     @BeforeEach
     void setUp() {
         mockedCompanyJpaRepository = Mockito.mock(CompanyJpaRepository.class);
-        mockedEmployeeJpaRepository = Mockito.mock(EmployeeJpaRepository.class);
+        EmployeeJpaRepository mockedEmployeeJpaRepository = Mockito.mock(EmployeeJpaRepository.class);
         companyService = new CompanyService(mockedCompanyJpaRepository, mockedEmployeeJpaRepository);
     }
 
