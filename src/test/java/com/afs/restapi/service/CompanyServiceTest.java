@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class EmployeeServiceTest {
+public class CompanyServiceTest {
 
 
     @Autowired
