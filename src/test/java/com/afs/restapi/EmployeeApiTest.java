@@ -33,7 +33,6 @@ class EmployeeApiTest {
     @BeforeEach
     void setUp() {
         employeeJpaRepository.deleteAll();
-        ;
     }
 
     @Test
