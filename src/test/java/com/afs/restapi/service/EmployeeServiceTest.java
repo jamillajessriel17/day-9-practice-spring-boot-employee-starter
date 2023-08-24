@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
@@ -46,6 +48,7 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(helloCompany.getId(), companyById.getId());
         Assertions.assertEquals(helloCompany.getName(), companyById.getName());
     }
+
     @Test
     void should_return_CompanyNotFoundException_when_findById_given_company_service_invalid_company_id() {
         //given
@@ -57,6 +60,23 @@ public class EmployeeServiceTest {
         Assertions.assertEquals("company id not found", companyNotFoundException.getMessage());
     }
 
+    @Test
+    void should_update_company_when_update_given_company_service_id_and_new_name() {
+        //given
+        Company helloCompany = getHelloCompany();
+        Company toUpdateCompany = new Company();
+        toUpdateCompany.setName("Hello hello company");
+        when(mockedCompanyJpaRepository.findById(helloCompany.getId())).thenReturn(Optional.of(helloCompany));
+        //when
+        companyService.update(helloCompany.getId(), toUpdateCompany);
+        //then
+        verify(mockedCompanyJpaRepository).save(argThat((tempCompany) -> {
+            Assertions.assertEquals(helloCompany.getId(), tempCompany.getId());
+            Assertions.assertEquals(helloCompany.getName(), tempCompany.getName());
+            return true;
+        }));
+
+    }
 
     private Company getHelloCompany() {
         Company helloCompany = new Company();
