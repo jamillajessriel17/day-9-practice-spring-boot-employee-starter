@@ -2,7 +2,6 @@ package com.afs.restapi;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeJpaRepository;
-import com.afs.restapi.repository.InMemoryEmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +32,8 @@ class EmployeeApiTest {
 
     @BeforeEach
     void setUp() {
-        employeeJpaRepository.deleteAll();;
+        employeeJpaRepository.deleteAll();
+        ;
     }
 
     @Test
@@ -68,7 +68,7 @@ class EmployeeApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeRequest))
                 .andExpect(MockMvcResultMatchers.status().is(201))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(notNullValue())) //noNullValue()
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
