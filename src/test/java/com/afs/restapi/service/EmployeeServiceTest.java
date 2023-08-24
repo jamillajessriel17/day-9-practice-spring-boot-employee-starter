@@ -46,6 +46,16 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(helloCompany.getId(), companyById.getId());
         Assertions.assertEquals(helloCompany.getName(), companyById.getName());
     }
+    @Test
+    void should_return_CompanyNotFoundException_when_findById_given_company_service_invalid_company_id() {
+        //given
+        long invalidCompanyId = 4L;
+        //when
+        CompanyNotFoundException companyNotFoundException = Assertions.assertThrows(CompanyNotFoundException.class,
+                () -> companyService.findById(invalidCompanyId));
+        //then
+        Assertions.assertEquals("company id not found", companyNotFoundException.getMessage());
+    }
 
 
     private Company getHelloCompany() {
