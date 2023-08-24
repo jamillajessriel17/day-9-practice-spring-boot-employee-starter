@@ -41,8 +41,8 @@ class CompanyApiTest {
 
     @Test
     void should_update_company_name() throws Exception {
-        Company previousCompany = new Company(1L, "abc");
-        Company toUpdateCompany = companyJpaRepository.save(previousCompany);
+
+        Company toUpdateCompany = companyJpaRepository.save(new Company(1L, "abc"));
 
         Company companyUpdateRequest = new Company(1L, "xyz");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -61,7 +61,6 @@ class CompanyApiTest {
 
     @Test
     void should_delete_company_name() throws Exception {
-
         Company savedCompany = companyJpaRepository.save(new Company(1L, "abc"));
 
         System.out.println(savedCompany.getId());
@@ -120,7 +119,7 @@ class CompanyApiTest {
         Employee employee = getEmployee(company);
         employeeJpaRepository.save(employee);
 
-        mockMvc.perform(get("/companies/{id}", company.getId()))
+        mockMvc.perform(get("/companies/{id}", savedCompany.getId()))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(savedCompany.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(savedCompany.getName()))
